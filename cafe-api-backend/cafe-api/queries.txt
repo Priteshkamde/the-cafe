@@ -1,0 +1,80 @@
+#####################################
+# To add a Snack Item
+#####################################
+
+# mutation {
+#   newSnack(name: "Pasta", amount: 50.5) {
+#     id
+#     name
+#     amount
+#   }
+# }
+
+
+
+#####################################
+# To add a Review for Corresponding => Snack Item (link via Snack_ID)
+#####################################
+
+# mutation {
+#     newReview(snackId:"407aa375-e1f2-4771-a447-425a9739e310",
+#     text: "New York style", rating:7
+#     ){
+#         snackId, text, rating
+#     }
+# }
+
+
+
+#####################################
+# To Get ALL snacks + Reviews
+#####################################
+
+# query {
+#   snacks {
+#     id,
+#     name,
+# 		amount,
+#     reviews {
+#       text, rating
+#     }
+#   }
+# }
+
+
+#####################################
+# update Snack amount
+#####################################
+# mutation {
+#     updateSnack(
+#       id:"407aa375-e1f2-4771-a447-425a9739e310",
+#     	amount : 120.75
+#     ){
+#         id, name ,amount
+#     }
+# }
+
+
+
+
+#####################################
+# Delete Snack
+#####################################
+
+# mutation {
+#   deleteSnack(id:"SNACK_ID")
+# }
+
+
+
+#####################################
+# Get all reviews of a Snack
+#####################################
+
+# query {
+#   thereviews(snackId : "407aa375-e1f2-4771-a447-425a9739e310") {
+#     text
+#     rating
+#   }
+# }
+
