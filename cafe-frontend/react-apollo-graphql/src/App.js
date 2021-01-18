@@ -2,8 +2,12 @@ import './App.css';
 import { useState } from 'react'; 
 import { useQuery, gql } from '@apollo/client';
 import { Container, Button, Spinner, Badge, Jumbotron, Row, Col } from 'react-bootstrap'; 
-import ProductPage from './ProductPage'
-import Cart from './Cart'
+import err_gif from './assets/err_gif.gif'
+
+import ProductPage from './components/ProductPage'
+import Cart from './components/Cart'
+
+
 const ALL_SNACKS = gql
 `
 query {
@@ -55,7 +59,13 @@ function App() {
   // Fetch from GraphQL => store in 'data'
   const {loading, error, data} = useQuery(ALL_SNACKS);
   if (loading) { return <Spinner animation="border" variant="primary" /> }
-  if (error) { return <code>Error... {error.message} </code> }
+  if (error) { 
+    return (
+    <code>Error... {error.message}
+      <img src={err_gif} alt="ERROR" />
+    </code>
+    );
+   }
 
   // Add To Cart
   const onAddItemToCart = (product) => {
