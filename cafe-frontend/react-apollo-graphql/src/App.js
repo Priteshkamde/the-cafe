@@ -113,7 +113,7 @@ function App() {
   data.snacks.forEach(element => { totalAmount += element.amount });
 
   return (
-    <Container fluid={true} className="">
+    <Container fluid={true} className="mb-3">
       <Jumbotron className="bg-transparent" style={jumbotronGrad}>
         <h1 className="display-3 font-weight-bolder" style={{letterSpacing: '4px'}}>The Cafe API - Snacks</h1>
         <h2>We have {data.snacks.length} delicacies ~ worth $ {Math.round(totalAmount)}</h2>

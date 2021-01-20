@@ -37,19 +37,16 @@ function Cart(props) {
 
         var doc = new jsPDF();
 
-        doc.addFont('ComicSansMS', 'Comic Sans', 'normal');
-        doc.setFont('Comic Sans');
-
+        doc.setFont("courier");
         doc.text( 15, 10, 'The Cafe Invoice ');
         doc.text( 15, 20, `${invoiceNumber}`);
         var date = new Date();
-        // var uno_ = document.getElementById("date").value;
         doc.setFontSize(10);
         doc.text( 15, 30, `${date}`);
 
+        // Table 1
         const tableColumn = ["Name", "Qty", "Rate","Amount"];
         const tableRows = [];
-
         cartItems.forEach(cartItem => {
         const invoiceData = [
         cartItem.name,
@@ -60,16 +57,22 @@ function Cart(props) {
         tableRows.push(invoiceData);
         });
 
+        // Table 2
         const tableColumn2 = ["Items Price", "Tax Price", "Shipping Price","Total Price"];
         const tableRows2 = [];
         const priceData = [itemsPrice.toFixed(2), taxPrice.toFixed(2), shippingPrice.toFixed(2), totalPrice.toFixed(2)];
         tableRows2.push(priceData);
 
+        // Add Table 1 & Table 2 to Doc & print both tables
         doc.autoTable(tableColumn, tableRows, { startY: 40 });
-
-        doc.autoTable(tableColumn2, tableRows2, { endY: -40 });
-        
-        doc.save(`invoice_${invoiceNumber}.pdf`);
+        doc.autoTable(tableColumn2, tableRows2, 
+            { 
+            endY: -40, 
+            }
+        );
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dayName = days[date.getDay()];
+        doc.save(`invoice_${invoiceNumber}_${dayName}@${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.pdf`);
     }
 
     return (
@@ -103,39 +106,38 @@ function Cart(props) {
             </div>
             ))
             }   
-                {
-                    cartItems.length!==0 && 
-                    (
-                        <Card style={cartCard} 
-                        className='shadow border-0 p-4 mt-4 bg-dark text-white'>
-                        <Card.Body>
-                            <h1 className='display-4'>Invoice # {invoiceNumber}</h1>
+            {
+                cartItems.length!==0 && 
+                (
+                    <Card style={{...cartCard, ...smallTextFontSpace}}
+                    className='shadow border-0 p-4 mt-4 bg-dark text-white'>
+                    <Card.Body>
+                        <h1 className='display-4'>Invoice # {invoiceNumber}</h1>
 
-                            <hr />
+                        <hr />
 
-                            <div>
+                        <div>
 
-                            <div> Items Price $ {itemsPrice.toFixed(2)}</div>
-                            <div> Tax Price $ {taxPrice.toFixed(2)}</div>
-                            <div> Shipping Price $ {shippingPrice.toFixed(2)}</div>
+                        <div> Items Price $ {itemsPrice.toFixed(2)}</div>
+                        <div> Tax Price $ {taxPrice.toFixed(2)}</div>
+                        <div> Shipping Price $ {shippingPrice.toFixed(2)}</div>
 
-                            </div>
-                            
-                            <h1 className="mx-auto">Grand Total $ {totalPrice.toFixed(2)}</h1>
-                            
-                            <Button className="mt-4 mr-3" variant="light">
-                                Place Order >
-                            </Button>
+                        </div>
+                        
+                        <h1 className="mx-auto">Grand Total $ {totalPrice.toFixed(2)}</h1>
+                        
+                        <Button className="mt-4 mr-3" variant="light">
+                            Place Order >
+                        </Button>
 
-                            <Button className="mt-4" variant="primary" onClick={() => printPDF(cartItems)}>
-                                Print Order
-                            </Button>
+                        <Button className="mt-4" variant="primary" onClick={() => printPDF(cartItems)}>
+                            Print Order
+                        </Button>
 
-                        </Card.Body>
-                        </Card>
-                    )
-            
-                }
+                    </Card.Body>
+                    </Card>
+                )
+            }
                             
         </div>
     ) //return ends (LAST brace)
