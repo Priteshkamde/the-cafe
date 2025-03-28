@@ -3,7 +3,8 @@
 
 - React JS
 - GraphQL 
-- Spring Boot ~ Kotlin
+- Spring Boot
+- Kotlin
 - Mongo DB
 
 ### Get to see the Complete Catalogue
